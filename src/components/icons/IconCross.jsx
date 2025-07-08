@@ -1,4 +1,4 @@
-const CrossIcon = () =>{
+const IconCross = () =>{
     return(
         <svg xmlns="http://www.w3.org/2000/svg" 
             width="18" 
@@ -12,4 +12,4 @@ const CrossIcon = () =>{
 }
 
 //FileRule anteriormente era 'fill-Rule', pero react todo debe ser camelCase... hay que quitarle el guion
-export default CrossIcon
+export default IconCross

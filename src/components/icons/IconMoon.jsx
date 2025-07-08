@@ -1,4 +1,4 @@
-const MoonIcon = () => {
+const IconMoon = () => {
     return(
         <svg xmlns="http://www.w3.org/2000/svg" 
             width="26" 
@@ -13,4 +13,4 @@ const MoonIcon = () => {
     )
 }
 
-export default MoonIcon
+export default IconMoon
