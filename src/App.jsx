@@ -1,81 +1,44 @@
-import CrossIcon from "./components/icons/CrossIcon"
-import MoonIcon from "./components/icons/MoonIcon"
+import { useState } from "react"
+import Header from "./components/Header"
+import TaskComputed from "./components/TaskComputed"
+import TaskCreate from "./components/TaskCreate"
+import TaskFilter from "./components/TaskFilter"
+import TaskList from "./components/TaskList"
 
+const initialStateTask=[
+  {id: 1, title: "Ir al gym", completed: false},
+  {id: 2, title: "Poner la lavadora", completed: true},
+  {id: 3, title: "Recoger la casa", completed: false},
+  {id: 4, title: "Hacer la clase de JS", completed: false},
+]
 
 const App = () => {
+
+  const [tasksData, setTaskData] = useState(initialStateTask)
+
   return (
     <>
       <div className="min-h-screen bg-gray-300 bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain">
         
-        <header className="container mx-auto px-4 py-8 flex flex-col gap-6">
-          <div className="flex justify-between ">
-            <h1 className="uppercase text-white text-3xl font-semibold tracking-[0.7rem]">tareas</h1>
-            <button><MoonIcon/></button>
-          </div>
-        </header>
+        <Header/>
 
         <main className="container mx-auto px-4 mb-8">
 
-          {/*TaskCreate*/}
-          <form action=""className="bg-white text-black border-none rounded py-3 px-3 flex items-center gap-3 mb-4">
-            <span className="rounded-full border-2 inline-block h-5 w-5 border-gray-400"></span>
-            <input 
-              type="text"
-              placeholder="Título de la tarea"
-              name="title"
-              className="w-full outline-none text-gray-400"
-            />         
-          </form>
+          <TaskCreate/>
 
-          {/*TaskList(taskItem) - TaskUpdate & TaskDelete*/}
           <div className="bg-white radius rounded-md mb-4">
+            {/*TaskList(taskItem) - TaskUpdate & TaskDelete*/}
+            <TaskList tasks={tasksData}/>
 
-            <article className="flex justify-between border-b border-gray-400 p-5">
-              <div className="flex gap-2 items-center">
-                <button className="rounded-full border-2 inline-block h-5 w-5 border-gray-400"></button>
-                <p>Completar el curso de JS</p>
-              </div>
-              <button><CrossIcon/></button>
-            </article>
-
-            <article className="flex justify-between border-b border-gray-400 p-5">
-              <div className="flex gap-2 items-center">
-                <button className="rounded-full border-2 inline-block h-5 w-5 border-gray-400"></button>
-                <p>Completar el curso de CSS</p>
-              </div>
-              <button><CrossIcon/></button>
-            </article>
-
-            <article className="flex justify-between border-b border-gray-400 p-5">
-              <div className="flex gap-2 items-center">
-                <button className="rounded-full border-2 inline-block h-5 w-5 border-gray-400"></button>
-                <p>Completar el curso de HTML</p>
-              </div>
-              <button><CrossIcon/></button>
-            </article>
-
-            {/*TaskComputed*/}
-            <section className="p-5 text-gray-400 flex justify-between text-xs">
-              <span>5 tareas pendientes</span>
-              <button>Eliminar tareas completadas</button>
-            </section>
+            <TaskComputed/>
 
           </div>
 
-            {/*Taskfilter*/}
-          <section className="container mx-auto radius rounded-mds">
-            <div className=" bg-white radius rounded-md flex justify-center gap-7 text-gray-400">
-              <button className="inline-block py-5 text-blue-700">Todas</button>
-              <button className="inline-block py-5 hover:text-blue-700">Pendientes</button>
-              <button className="inline-block py-5 hover:text-blue-700">Completadas</button>   
-            </div>
-          </section>
+          <TaskFilter/>
 
         </main>
 
-
       </div>
-
     </>
   )
 }
