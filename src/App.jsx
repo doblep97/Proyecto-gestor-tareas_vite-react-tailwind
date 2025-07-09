@@ -63,15 +63,15 @@ const App = () => {
 
   return (
     <>
-      <div className=" bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain">
+      <div className=" dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain min-h-screen dark:bg-gray-900 bg-gray-300 pb-8">
         
         <Header/>
 
-        <main className="container mx-auto px-4 mb-8">
+        <main className="container mx-auto px-4 ">
 
           <TaskCreate createNewTask={createNewTask}/>
 
-          <div className="bg-white radius rounded-md mb-4">
+          <div className="bg-white radius rounded-md mb-4 dark:bg-gray-600 dark:text-gray-400">
             
             {/*Pasamos como prop la funcion que marca que tareas han de visualizarse*/}
             <TaskList 
