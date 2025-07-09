@@ -40,8 +40,27 @@ const App = () => {
 
   const removeAllTasksCompleted = () => {
     setTaskData(tasksData.filter(task => (!task.completed)))
-    
   }
+
+  const [filter, setfilter] = useState('all')
+
+  //Lo enviamos a las opciones de filtrada para que según el boton, se muestren unas u otras tareas
+  const changeFilter = (filter) => setfilter(filter)
+
+  //Dependiendo del estado (por defecto 'all'), apareceran unas u otras tareas
+  const filterTasks = () =>{
+    switch (filter) {
+      case 'all':
+        return tasksData;
+      case 'active':
+        return tasksData.filter(task=>!task.completed)
+      case 'completed':
+        return tasksData.filter(task=>task.completed)
+      default:
+        return tasksData
+    }
+  }
+
   return (
     <>
       <div className=" bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain">
@@ -53,9 +72,10 @@ const App = () => {
           <TaskCreate createNewTask={createNewTask}/>
 
           <div className="bg-white radius rounded-md mb-4">
-            {/*TaskList(taskItem) - TaskUpdate & TaskDelete*/}
+            
+            {/*Pasamos como prop la funcion que marca que tareas han de visualizarse*/}
             <TaskList 
-              tasks={tasksData} 
+              tasks={filterTasks()} 
               removeTask= {removeTask} 
               updateTask = {updateTask}
             />
@@ -64,7 +84,7 @@ const App = () => {
 
           </div>
 
-          <TaskFilter/>
+          <TaskFilter changeFilter={changeFilter} filter={filter}/>
 
         </main>
 
