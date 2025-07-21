@@ -66,10 +66,20 @@ const App = () => {
 
   return (
     <>
-      <div className=" dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] bg-[url(./assets/images/bg-mobile-light.jpg)] bg-no-repeat bg-contain min-h-screen dark:bg-gray-900 bg-gray-300 pb-8">
-        <Header />
+      <div
+        className=" 
+          dark:bg-[url(./assets/images/bg-mobile-dark.jpg)] 
+          bg-[url(./assets/images/bg-mobile-light.jpg)] 
+          md:bg-[url(./assets/images/bg-desktop-light.jpg)]
+          dark:md:bg-[url(./assets/images/bg-desktop-dark.jpg)]
+          bg-no-repeat 
+          bg-contain min-h-screen 
+          dark:bg-gray-900 
+          bg-gray-300 pb-8"
+      >
+        <main className="container mx-auto px-4 md:max-w-xl">
+          <Header />
 
-        <main className="container mx-auto px-4 ">
           <TaskCreate createNewTask={createNewTask} />
 
           <div className="bg-white radius rounded-md mb-4 dark:bg-gray-600 dark:text-gray-400">
