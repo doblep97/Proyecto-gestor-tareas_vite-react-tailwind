@@ -4,8 +4,20 @@ import TaskComputed from "./components/TaskComputed";
 import TaskCreate from "./components/TaskCreate";
 import TaskFilter from "./components/TaskFilter";
 import TaskList from "./components/TaskList";
+import { DragDropContext } from "@hello-pangea/dnd";
 
 const initialStateTask = JSON.parse(localStorage.getItem("tasks")) || [];
+
+const reorderTasks = (previousListTasks, startIndex, endIndex) => {
+  //copia de la lista
+  const resultFinal = [...previousListTasks];
+  //Selecciono el item que se ha arrastado
+  const [taskReorder] = resultFinal.splice(startIndex, 1);
+  //Añado ese item en la posicion que lo ha soltado
+  resultFinal.splice(endIndex, 0, taskReorder);
+  //Devolvemos el nuevo orden de las tareas
+  return resultFinal;
+};
 
 const App = () => {
   const [tasksData, setTaskData] = useState(initialStateTask);
@@ -63,6 +75,30 @@ const App = () => {
         return tasksData;
     }
   };
+  //Funcion que maneja el drag & drop
+  const handleDragEnd = (result) => {
+    //'result' contiene la información sobre dónde se arrastró el elemento y dónde se soltó
+    // source: posición original (antes de mover)
+    // destination: posición final (donde se soltó)
+    const { destination, source } = result;
+
+    if (!destination) return; //si se soltó fuera de una zona válida, no se hace nada.
+
+    //Si el usuario suelta el elemento en la misma posición donde estaba, no se reordena nada y salimos de la función.
+    if (
+      source.index === destination.index &&
+      source.droppableId === destination.droppableId
+    ) {
+      return;
+    }
+
+    // Si el arrastre es válido y ha cambiado de posición, se actualiza el estado de tasksData
+    setTaskData(
+      (
+        previousListTasks //'previousListTasks' captura el orden anterior de los items anterioes al arrastre del usuario (como si fuera un 'event')
+      ) => reorderTasks(previousListTasks, source.index, destination.index) //Envío la informacion a la función
+    );
+  };
 
   return (
     <>
@@ -84,11 +120,13 @@ const App = () => {
 
           <div className="bg-white radius rounded-md mb-4 dark:bg-gray-600 dark:text-gray-400">
             {/*Pasamos como prop la funcion que marca que tareas han de visualizarse*/}
-            <TaskList
-              tasks={filterTasks()}
-              removeTask={removeTask}
-              updateTask={updateTask}
-            />
+            <DragDropContext onDragEnd={handleDragEnd}>
+              <TaskList
+                tasks={filterTasks()}
+                removeTask={removeTask}
+                updateTask={updateTask}
+              />
+            </DragDropContext>
 
             <TaskComputed
               computedTasksLeft={computedTasksLeft}
