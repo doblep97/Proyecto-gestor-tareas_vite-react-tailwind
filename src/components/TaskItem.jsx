@@ -2,6 +2,9 @@ import IconCross from "./icons/IconCross";
 import IconCheck from "./icons/IconCheck";
 import React from "react";
 
+// 'React.forwardRef' es una función de React que te permite pasar una referencia (ref) desde un componente padre a un elemento DOM o componente hijo específico.
+// Los 'ref' solo funcionan con elementos nativos del DOM (<input>, <div>, etc.). Si quieres que un ref funcione dentro de un componente personalizado, tienes que usar 'forwardRef'
+
 const TaskItem = React.forwardRef(
   ({ task, removeTask, updateTask, ...props }, ref) => {
     const { id, title, completed } = task;
